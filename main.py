@@ -72,7 +72,7 @@ def KK():
         name = input()
         print("Tags: (text) <Default> = blank")
         tags = input()
-        download(game = game, name =  name, tags = tags)
+        download(mode = "basic", game = game, name =  name, tags = tags)
 
 
 def AA2():
@@ -106,7 +106,7 @@ def AA2():
         name = input()
         print("Tags: (text) <Default> = blank")
         tags = input()
-        download(game = game, name =  name, tags = tags)
+        download(mode = "basic", game = game, name =  name, tags = tags)
 
 def HS():
 
@@ -141,7 +141,7 @@ def HS():
         name = input()
         print("Tags: (text) <Default> = blank")
         tags = input()
-        download(game = game, name =  name, tags = tags)
+        download(mode = "basic", game = game, name =  name, tags = tags)
 
 
 def PH():
@@ -171,7 +171,7 @@ def PH():
         name = input()
         print("Tags: (text) <Default> = blank")
         tags = input()
-        download(game = game, name =  name, tags = tags)
+        download(mode = "basic", game = game, name =  name, tags = tags)
 
 
 def AI_HS2():
@@ -205,7 +205,7 @@ def AI_HS2():
         name = input()
         print("Tags: (text) <Default> = blank")
         tags = input()
-        download(game = game, name =  name, tags = tags)
+        download(mode = "basic", game = game, name =  name, tags = tags)
 
 
 def COM3D2():
@@ -237,7 +237,7 @@ def COM3D2():
         name = input()
         print("Tags: (text) <Default> = blank")
         tags = input()
-        download(game = game, name =  name, tags = tags)
+        download(mode = "basic", game = game, name =  name, tags = tags)
 
 
 def SH():
@@ -267,7 +267,7 @@ def SH():
         name = input()
         print("Tags: (text) <Default> = blank")
         tags = input()
-        download(game = game, name =  name, tags = tags)
+        download(mode = "basic", game = game, name =  name, tags = tags)
 
 def HC():
 
@@ -298,7 +298,7 @@ def HC():
         name = input()
         print("Tags: (text) <Default> = blank")
         tags = input()
-        download(game = game, name =  name, tags = tags)
+        download(mode = "basic", game = game, name =  name, tags = tags)
 
 def main():
     menu()
