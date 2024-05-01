@@ -1,5 +1,6 @@
 import time
-from time import sleep
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 def download(**data):
     print("Download function invoked with arguments: ", data)
@@ -70,13 +71,55 @@ def download(**data):
             time.sleep(5)
             exit(code=1)
 
-def basic_download(url, name, tag):
+def basic_download(url, name, tags):
     print("Basic download function invoked.")
-    url = url
-    name = name
-    tag = tag
-    print("url: ", url, " name: ", name," tag: ", tag)
-    #selenium code below
+
+    try:
+        url = url
+        name = name
+        tags = tags
+        print("url: ", url, " name: ", name," tag: ", tags)
+        #selenium code below
+        options = webdriver.FirefoxOptions()
+        #options.add_argument("-headless")
+        #driver = webdriver.Firefox(options=options)
+        driver = webdriver.Firefox()
+        driver.get(url)
+
+        # I know I can just make up the link to the website since it's uses GET method like "https://db.bepis.moe/koikatsu?name=aaaa&tag=bbbb" but I want to try use the way below
+        name_input = driver.find_element(By.ID, "name")
+        name_input.send_keys(name)
+        tag_input = driver.find_element(By.ID, "tag")
+        tag_input.send_keys(tags)
+        tag_input.submit()
+
+        #list and click the download buttons (loop) with certain intervals since website don;t like bulk download ~make wait time so the bigger cards can be downloaded ~ 3 seconds
+        #the value below must be 2 on the beginning -> after "Next" button is clicked -> i++
+        i = 2
+        #LOOP HERE
+        print("Page "+(i-1))
+
+        #SECOND LOOP HERE 24 cards so from 1 <= 24
+        i2 = 1
+        download_button = driver.find_element(By.CSS_SELECTOR,"inner-card-body > div:nth-child('"+i2+"') > div > div > a.btn.btn-primary.btn-sm")
+        download_button.click()
+        # inner-card-body > div:nth-child('+number+') > div > div > a.btn.btn-primary.btn-sm').click()
+
+        # Next Button "a[href=/koikatsu?page="+i+"]" #for first loop i = 2 coz "?page=2"
+        #below localize and click next button if active
+
+
+        #here loop including that inside -> just set the loop to be true until the "Next" button is "disabled"
+        # button a class =  ->  page - link WHERE text is Next / Next button - if it's not "page-item disabled" than click and loop again if it's disabled than stoop loop
+
+
+
+        # driver.quit()
+
+    except Exception:
+        print("Exception in basic_download(): "+Exception)
+
+
 
 def main():
     print("download.py")
