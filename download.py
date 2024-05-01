@@ -73,6 +73,8 @@ def download(**data):
 
 def basic_download(url, name, tags):
     print("Basic download function invoked.")
+    #I need to let user config wait time and provide some values or idk explain it in documentation and readme.md
+    print("WARNING: Some card weigh a lot even over 25MB - if your intewrnet is slow CHANGE WAIT TIME between card downloads to even 10 seconds!")
 
     try:
         url = url
@@ -93,23 +95,30 @@ def basic_download(url, name, tags):
         tag_input.send_keys(tags)
         tag_input.submit()
 
-        #list and click the download buttons (loop) with certain intervals since website don;t like bulk download ~make wait time so the bigger cards can be downloaded ~ 3 seconds
-        #the value below must be 2 on the beginning -> after "Next" button is clicked -> i++
-        i = 2
+        #just set the loop to be true until the "Next" button is "disabled" than flip the flag to exit loop // if Next button DISABLED flag = 0
         #LOOP HERE
-        print("Page "+(i-1))
+        flag = 1
+        while(flag == 1):
+            i = 2
+            print(f"Page {i-1}")
+            print("Sleep for 5 seconds to let the website load...")
+            time.sleep(5)
+            #SECOND LOOP HERE 24 cards on one page so from 1 <= 24
+            i2 = 1
+            while(i2<=24):
+                download_button = driver.find_element(By.CSS_SELECTOR, "#inner-card-body > div:nth-child(" + str(i2) + ") > div > div > a.btn.btn-primary.btn-sm")
+                download_button.click()
+                print(f"The download button clicked. Waiting 3 Seconds for card to be downloaded. Downloading card number: {i2}")
+                time.sleep(3)
+                i2 += 1
+            flag = 0 #it's here to test the lines above move down later
 
-        #SECOND LOOP HERE 24 cards so from 1 <= 24
-        i2 = 1
-        download_button = driver.find_element(By.CSS_SELECTOR,"inner-card-body > div:nth-child('"+i2+"') > div > div > a.btn.btn-primary.btn-sm")
-        download_button.click()
-        # inner-card-body > div:nth-child('+number+') > div > div > a.btn.btn-primary.btn-sm').click()
+
 
         # Next Button "a[href=/koikatsu?page="+i+"]" #for first loop i = 2 coz "?page=2"
-        #below localize and click next button if active
+        #below localize and click next button if active if not set flag to 0
 
 
-        #here loop including that inside -> just set the loop to be true until the "Next" button is "disabled"
         # button a class =  ->  page - link WHERE text is Next / Next button - if it's not "page-item disabled" than click and loop again if it's disabled than stoop loop
 
 
