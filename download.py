@@ -74,7 +74,9 @@ def download(**data):
 def basic_download(url, name, tags):
     print("Basic download function invoked.")
     #I need to let user config wait time and provide some values or idk explain it in documentation and readme.md
-    print("WARNING: Some card weigh a lot even over 25MB - if your intewrnet is slow CHANGE WAIT TIME between card downloads to even 10 seconds!")
+    #OR
+    #I may try using watchdog or directory scan to check if file exists -> the card and waiting until it does so there is no need for download interval - it downloads only if previous card is downloaded
+    print("WARNING: Some cards weigh a lot, even over 25MB - if your intewrnet is slow CHANGE WAIT TIME between card downloads to even 10 seconds!")
 
     try:
         url = url
@@ -95,33 +97,58 @@ def basic_download(url, name, tags):
         tag_input.send_keys(tags)
         tag_input.submit()
 
+        print("Waiting 5 seconds for page to load...")
+        time.sleep(5)
+
         #just set the loop to be true until the "Next" button is "disabled" than flip the flag to exit loop // if Next button DISABLED flag = 0
-        #LOOP HERE
+        i = 2
+        i2 = 1
         flag = 1
-        while(flag == 1):
-            i = 2
-            print(f"Page {i-1}")
-            print("Sleep for 5 seconds to let the website load...")
-            time.sleep(5)
-            #SECOND LOOP HERE 24 cards on one page so from 1 <= 24
-            i2 = 1
-            while(i2<=24):
-                download_button = driver.find_element(By.CSS_SELECTOR, "#inner-card-body > div:nth-child(" + str(i2) + ") > div > div > a.btn.btn-primary.btn-sm")
-                download_button.click()
-                print(f"The download button clicked. Waiting 3 Seconds for card to be downloaded. Downloading card number: {i2}")
-                time.sleep(3)
-                i2 += 1
-            flag = 0 #it's here to test the lines above move down later
 
+        #base url - the url2 is for adding '&page='+i and than reseting it back to normal before adding next &page
+        url = driver.current_url
 
-
-        # Next Button "a[href=/koikatsu?page="+i+"]" #for first loop i = 2 coz "?page=2"
-        #below localize and click next button if active if not set flag to 0
-
-
-        # button a class =  ->  page - link WHERE text is Next / Next button - if it's not "page-item disabled" than click and loop again if it's disabled than stoop loop
-
-
+        while (flag == 1):
+            try:
+                while (i2 <= 24):
+                    print(f"Downloading card number: {i2}")
+                    download_selector = "document.querySelector('#inner-card-body > div:nth-child(" + str(i2) + ") > div > div > a.btn.btn-primary.btn-sm').click();";
+                    time.sleep(3)
+                    driver.execute_script(download_selector)
+                    i2 += 1
+                #JS to check the Next button if it's parent dont have "disabled" attrib, than click it and continue, if it does - download finished -> Raise flag - exit loop. exit(0)
+                '''
+                JS CODE BELOW - now make it into selenium XD
+                02:40:20.388 xpath = "//a[contains(text(),'Next')]";
+                02:40:20.405 "//a[contains(text(),'Next')]"
+                02:40:34.097 var matchingElement = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                02:40:34.114 undefined
+                02:42:05.285 matchingElement
+                02:42:05.304
+                <a class="page-link" href="/honeyselect?name=Ayaka">
+                02:42:39.367 parentDiv = matchingElement.parentNode;
+                02:42:39.389
+                <li class="page-item disabled">
+                02:42:43.478 parentDiv
+                02:42:43.499
+                <li class="page-item disabled">
+                '''
+                print("Getting url...")
+                url2 = url
+                print("Got url - adding page number...")
+                url2 += "&page=" + str(i)
+                print("I got url - waiting 5 seconds for page to load...")
+                driver.get(url2)
+                time.sleep(5)
+                i2 = 1
+                i += 1
+                #Below IF for testing only - remove later
+                if(i >= 5):
+                    flag == 0
+            except Exception:
+                print("The download failed! Exiting in 5 seconds.")
+                time.sleep(5)
+                exit(1)
 
         # driver.quit()
 
