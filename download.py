@@ -110,29 +110,47 @@ def basic_download(url, name, tags):
 
         while (flag == 1):
             try:
-                while (i2 <= 24):
-                    print(f"Downloading card number: {i2}")
-                    download_selector = "document.querySelector('#inner-card-body > div:nth-child(" + str(i2) + ") > div > div > a.btn.btn-primary.btn-sm').click();";
-                    time.sleep(3)
-                    driver.execute_script(download_selector)
-                    i2 += 1
-                #JS to check the Next button if it's parent dont have "disabled" attrib, than click it and continue, if it does - download finished -> Raise flag - exit loop. exit(0)
-                '''
-                JS CODE BELOW - now make it into selenium XD
-                02:40:20.388 xpath = "//a[contains(text(),'Next')]";
-                02:40:20.405 "//a[contains(text(),'Next')]"
-                02:40:34.097 var matchingElement = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-                02:40:34.114 undefined
-                02:42:05.285 matchingElement
-                02:42:05.304
-                <a class="page-link" href="/honeyselect?name=Ayaka">
-                02:42:39.367 parentDiv = matchingElement.parentNode;
-                02:42:39.389
-                <li class="page-item disabled">
-                02:42:43.478 parentDiv
-                02:42:43.499
-                <li class="page-item disabled">
-                '''
+                try:
+                    while (i2 <= 24):
+                        print(f"Downloading card number: {i2}")
+                        download_selector = "document.querySelector('#inner-card-body > div:nth-child(" + str(i2) + ") > div > div > a.btn.btn-primary.btn-sm').click();"
+                        time.sleep(4)
+                        driver.execute_script(download_selector)
+                        i2 += 1
+                except Exception:
+                    print("The download FINISHED!")
+                    print("There were less than 24 cards on last page.")
+                    #    flag == 0 + go back to main() // or leave like that to exit program
+                    print("Exiting in 5 seconds.")
+                    time.sleep(5)
+                    driver.quit()
+                    exit(0)
+                next_button_script = """
+                xpath = "//a[contains(text(),'Next')]";
+                var matchingElement = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                parentDiv = matchingElement.parentNode;
+                if(parentDiv.classList.contains('disabled') == true){
+                    var state = "Disabled";
+                    return state;
+                }
+                else{
+                    var state = "Enabled";
+                    return state;
+                }
+                """
+                print("Getting 'Next' button state...")
+                button_state = driver.execute_script(next_button_script)
+                #sleep for script and mainly for last card/cards to download
+                time.sleep(5)
+                print("Button state = "+button_state)
+                if(button_state == "Disabled"):
+                    print("Download FINISHED!")
+                    #    flag == 0 + go back to main() // or leave like that to exit program
+                    print("-------------------")
+                    print("Exiting in 5 seconds.")
+                    driver.quit()
+                    time.sleep(5)
+                    exit(0)
                 print("Getting url...")
                 url2 = url
                 print("Got url - adding page number...")
@@ -142,19 +160,17 @@ def basic_download(url, name, tags):
                 time.sleep(5)
                 i2 = 1
                 i += 1
-                #Below IF for testing only - remove later
-                if(i >= 5):
-                    flag == 0
             except Exception:
-                print("The download failed! Exiting in 5 seconds.")
+                print("The download failed. "+Exception)
+                print("Exiting in 5 seconds.")
                 time.sleep(5)
+                driver.quit()
                 exit(1)
-
-        # driver.quit()
-
     except Exception:
         print("Exception in basic_download(): "+Exception)
-
+        time.sleep(5)
+        driver.quit()
+        exit(1)
 
 
 def main():
