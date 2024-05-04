@@ -1,6 +1,7 @@
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+#BTW selenium 420 ~blaze it XD
 
 def download(**data):
     print("Download function invoked with arguments: ", data)
@@ -8,39 +9,15 @@ def download(**data):
 #below code checks if the basic option is selected - if yes -> the universal function will be invoked | if no -> the advanced functions will be invoked - tailored to the data that is for set game type
     try:
         if data["mode"] == "basic":
-            print("Basic mode activated.")
-            if data["game"] == "KK":
-                url = "https://db.bepis.moe/koikatsu"
-                basic_download(url, data["name"], data["tags"])
-            elif data["game"] == "AA2":
-                url = "https://db.bepis.moe/aa2"
-                basic_download(url, data["name"], data["tags"])
-            elif data["game"] == "HS":
-                url = "https://db.bepis.moe/honeyselect"
-                basic_download(url, data["name"], data["tags"])
-            elif data["game"] == "PH":
-                url = "https://db.bepis.moe/playhome"
-                basic_download(url, data["name"], data["tags"])
-            elif data["game"] == "AI_HS2":
-                url = "https://db.bepis.moe/aishoujo"
-                basic_download(url, data["name"], data["tags"])
-            elif data["game"] == "COM3D2":
-                url = "https://db.bepis.moe/com3d2"
-                basic_download(url, data["name"], data["tags"])
-            elif data["game"] == "SH":
-                url = "https://db.bepis.moe/summerheat"
-                basic_download(url, data["name"], data["tags"])
-            elif data["game"] == "HC":
-                url = "https://db.bepis.moe/honeycome"
-                basic_download(url, data["name"], data["tags"])
-            else:
-                print("ERROR! Unknown value at key -> 'game' | Program will exit in 5 seconds.")
-                time.sleep(5)
-                exit(code=1)
+            basic_download(data["url"], data["name"], data["tags"])
+        else:
+            advanced_download(data)
     except Exception:
-        print("ERROR - basic_download couldn't be invoked. Is website down?")
+        print("ERROR - download function couldn't be invoked. Is website down?")
+        print("Exiting in 5 seconds.")
+        time.sleep(5)
+        exit(1)
 
-    advanced_download()
 
 
 def basic_download(url, name, tags):
@@ -128,7 +105,7 @@ def basic_download(url, name, tags):
                 url2 = url
                 print("Got url - adding page number...")
                 url2 += "&page=" + str(i)
-                print("I got url - waiting 5 seconds for page to load...")
+                print("Waiting 5 seconds for page to load...")
                 driver.get(url2)
                 time.sleep(5)
                 i2 = 1
@@ -141,12 +118,14 @@ def basic_download(url, name, tags):
                 exit(1)
     except Exception:
         print("Exception in basic_download(): "+Exception)
+        print("Exiting in 5 seconds.")
         time.sleep(5)
         driver.quit()
         exit(1)
 
-def advanced_download():
+def advanced_download(data):
     print("Advanced download function invoked")
+    print("DATA: "+data)
     #KK     download(game = game, name =  name, tags = tags, gender = gender, personality = personality, game_type = game_type, modded_content = modded_content, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
     #AA2   download(game = game, name =  name, tags = tags, gender = gender, personality = personality, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured) *
     #HS     download(game = game, name =  name, tags = tags, gender = gender, personality = personality, game_type = game_type, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)

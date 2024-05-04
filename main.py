@@ -18,74 +18,82 @@ def menu():
     #for all of em like KK AA2 for example - kk.txt -> contains setings for that one | AA2.txt -> contains settings for that one / if the row isblank the user inoputs the data here like -> tags = long_hair; name = ; <- will be prompted toinsert name in consoleor click enter to set default
     if selected == "1":
         game = "KK"
+        url = "https://db.bepis.moe/koikatsu"
         print("If you wish to enter only name and/or tags press 1 or ENTER (or anything else really). For advance download press 2.")
         selected = input()
         if selected == "2":
-            KK(game)
+            KK(game, url)
         else:
-            basic(game)
+            basic(game, url)
     elif selected == "2":
         game = "AA2"
+        url = "https://db.bepis.moe/aa2"
         print("If you wish to enter only name and/or tags press 1 or ENTER (or anything else really). For advance download press 2.")
         selected = input()
         if selected == "2":
-            AA2_and_AI_HS2(game)
+            AA2_and_AI_HS2(game, url)
         else:
-            basic(game)
+            basic(game, url)
     elif selected == "3":
         game = "HS"
+        url = "https://db.bepis.moe/honeyselect"
         print("If you wish to enter only name and/or tags press 1 or ENTER (or anything else really). For advance download press 2.")
         selected = input()
         if selected == "2":
-            HS(game)
+            HS(game, url)
         else:
-            basic(game)
+            basic(game, url)
     elif selected == "4":
         game = "PH"
+        url = "https://db.bepis.moe/playhome"
         print("If you wish to enter only name and/or tags press 1 or ENTER (or anything else really). For advance download press 2.")
         selected = input()
         if selected == "2":
-            PH(game)
+            PH(game, url)
         else:
-            basic(game)
+            basic(game, url)
     elif selected == "5":
         game = "AI_HS2"
+        url = "https://db.bepis.moe/aishoujo"
         print("If you wish to enter only name and/or tags press 1 or ENTER (or anything else really). For advance download press 2.")
         selected = input()
         if selected == "2":
-            AA2_and_AI_HS2(game)
+            AA2_and_AI_HS2(game, url)
         else:
-            basic(game)
+            basic(game, url)
     elif selected == "6":
         game = "COM3D2"
+        url = "https://db.bepis.moe/com3d2"
         print("If you wish to enter only name and/or tags press 1 or ENTER (or anything else really). For advance download press 2.")
         selected = input()
         if selected == "2":
-            COM3D2(game)
+            COM3D2(game, url)
         else:
-            basic(game)
+            basic(game, url)
     elif selected == "7":
         game = "SH"
+        url = "https://db.bepis.moe/summerheat"
         print("If you wish to enter only name and/or tags press 1 or ENTER (or anything else really). For advance download press 2.")
         selected = input()
         if selected == "2":
-            SH(game)
+            SH(game, url)
         else:
-            basic(game)
+            basic(game, url)
     elif selected == "8":
         game = "HC"
+        url = "https://db.bepis.moe/honeycome"
         print("If you wish to enter only name and/or tags press 1 or ENTER (or anything else really). For advance download press 2.")
         selected = input()
         if selected == "2":
-            HC(game)
+            HC(game, url)
         else:
-            basic(game)
+            basic(game, url)
     else:
         print("Please select one of the correct options (1-6):")
         main()
 
 
-def KK(game):
+def KK(game, url):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
     print("Name: (text) <Default> = blank")
     name = input()
@@ -105,10 +113,10 @@ def KK(game):
     show_hidden = input()
     print("Show only featured: (checkbox - enter '1' to check - 0 or nothig to leave unchecked <Default>)")
     show_only_featured = input()
-    download(game = game, name = name, tags = tags, gender = gender, personality = personality, game_type = game_type, modded_content = modded_content, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
+    download(game = game, url = url, name = name, tags = tags, gender = gender, personality = personality, game_type = game_type, modded_content = modded_content, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
 
 
-def AA2_and_AI_HS2(game):
+def AA2_and_AI_HS2(game, url):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
     print("Name: (text) <Default> = blank")
     name = input()
@@ -124,9 +132,9 @@ def AA2_and_AI_HS2(game):
     show_hidden = input()
     print("Show only featured: (checkbox - enter '1' to check - 0 or nothig to leave unchecked <Default>)")
     show_only_featured = input()
-    download(game = game, name = name, tags = tags, gender = gender, personality = personality, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
+    download(game = game, url = url, name = name, tags = tags, gender = gender, personality = personality, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
 
-def HS(game):
+def HS(game, url):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
     print("Name: (text) <Default> = blank")
     name = input()
@@ -144,10 +152,10 @@ def HS(game):
     show_hidden = input()
     print("Show only featured: (checkbox - enter '1' to check - 0 or nothig to leave unchecked <Default>)")
     show_only_featured = input()
-    download(game = game, name = name, tags = tags, gender = gender, personality = personality, game_type = game_type, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
+    download(game = game, url = url, name = name, tags = tags, gender = gender, personality = personality, game_type = game_type, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
 
 
-def PH(game):
+def PH(game, url):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
     print("Name: (text) <Default> = blank")
     name = input()
@@ -159,9 +167,9 @@ def PH(game):
     show_hidden = input()
     print("Show only featured: (checkbox - enter '1' to check - 0 or nothig to leave unchecked <Default>)")
     show_only_featured = input()
-    download(game = game, name = name, tags = tags, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
+    download(game = game, url = url, name = name, tags = tags, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
 
-def COM3D2(game):
+def COM3D2(game, url):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
     print("Name: (text) <Default> = blank")
     name = input()
@@ -175,10 +183,10 @@ def COM3D2(game):
     show_hidden = input()
     print("Show only featured: (checkbox - enter '1' to check - 0 or nothig to leave unchecked <Default>)")
     show_only_featured = input()
-    download(game = game, name = name, tags = tags, preset_type = preset_type, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
+    download(game = game, url = url, name = name, tags = tags, preset_type = preset_type, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
 
 
-def SH(game):
+def SH(game, url):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
     print("Name: (text) <Default> = blank")
     name = input()
@@ -190,9 +198,9 @@ def SH(game):
     show_hidden = input()
     print("Show only featured: (checkbox - enter '1' to check - 0 or nothig to leave unchecked <Default>)")
     show_only_featured = input()
-    download(game = game, name = name, tags = tags, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
+    download(game = game, url = url, name = name, tags = tags, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
 
-def HC(game):
+def HC(game, url):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
     print("Name: (text) <Default> = blank")
     name = input()
@@ -206,15 +214,15 @@ def HC(game):
     show_hidden = input()
     print("Show only featured: (checkbox - enter '1' to check - 0 or nothig to leave unchecked <Default>)")
     show_only_featured = input()
-    download(game = game, name = name, tags = tags, gender = gender, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
+    download(game = game, url = url, name = name, tags = tags, gender = gender, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
 
-def basic(game):
+def basic(game, url):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
     print("Name: (text) <Default> = blank")
     name = input()
     print("Tags: (text) <Default> = blank")
     tags = input()
-    download(mode="basic", game=game, name=name, tags=tags)
+    download(mode = "basic", game = game, url = url, name=name, tags=tags)
 
 def main():
     menu()
