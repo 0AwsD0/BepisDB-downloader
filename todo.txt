@@ -1,0 +1,8 @@
+Are you certain game enjoyer? Do you fell annoyed selecting game (same one) every time on startup of the program?
+I'll have solution for you!
+The new function I planned will check if config file (txt?) exists to automatically choose game on startup!
+It will be able to select the download mode too!
+The plan is to even add auto download - you create file with all parameters and don't need to type it into console!
+The program will do it for you!
+
+~Thats the plan will see when or if I'm gonna implement that
