@@ -6,3 +6,6 @@ The plan is to even add auto download - you create file with all parameters and 
 The program will do it for you!
 
 ~Thats the plan will see when or if I'm gonna implement that
+
++ better card download -> checking if card is downloaded, and only then downloading next card
++ packing app into exe
