@@ -5,7 +5,11 @@ It will be able to select the download mode too!
 The plan is to even add auto download - you create file with all parameters and don't need to type it into console!
 The program will do it for you!
 
-~Thats the plan will see when or if I'm gonna implement that
+~That's the plan will see when or if I'm gonna implement that or any other functionality mentioned in this file, since for me - the current state is enough.
 
-+ better card download -> checking if card is downloaded, and only then downloading next card
++ better card download -> checking if card is downloaded if it's not or server went down for a second - retry (i = i), and only then downloading next card (i += 1)
++ if server went down for a second and first card couldn't be downloaded - retry loading page at least 1 time
 + packing app into exe
++ selecting download location
+
++START AT PAGE - when website goes down or the download is stopped //  also before download check if card exists in download folder to skip already downloaded cards

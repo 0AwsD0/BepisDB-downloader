@@ -10,25 +10,9 @@ def download(**data):
 
 #below code checks if the basic option is selected - if yes -> the universal function will be invoked | if no -> the advanced functions will be invoked - tailored to the data that is for set game type
     if data["mode"] == "basic":
-        try:
-            basic_download(data["url"], data["name"], data["tags"])
-        except:
-            print("basic_download() - failed")
-            print("Is website down?")
-            print("Did you input proper values?")
-            print("Exiting in 5 seconds.")
-            time.sleep(5)
-            exit(1)
+        basic_download(data["url"], data["name"], data["tags"])
     else:
-        try:
-            advanced_download(**data)
-        except:
-            print("advanced_download() - failed")
-            print("Is website down?")
-            print("Did you input proper values?")
-            print("Exiting in 5 seconds.")
-            time.sleep(5)
-            exit(1)
+        advanced_download(**data)
 
 
 def basic_download(url, name, tags):
@@ -119,8 +103,9 @@ def basic_download(url, name, tags):
                 exit(0)
             print("Getting url...")
             url2 = url
-            print("Got url - adding page number...")
             url2 += "&page=" + str(i)
+            print("Got url - adding page number...")
+            print("Url: " + url2)
             print("Waiting 5 seconds for page to load...")
             driver.get(url2)
             time.sleep(5)
@@ -155,7 +140,8 @@ def advanced_download(**data):
     #I need to let user config wait time and provide some values or idk explain it in documentation and readme.md
     #OR
     #I may try using watchdog or directory scan to check if file exists -> the card and waiting until it does so there is no need for download interval - it downloads only if previous card is downloaded
-    print("WARNING: Some cards weigh a lot, even over 25MB - if your intewrnet is slow CHANGE WAIT TIME between card downloads to even 10 seconds!")
+    print("WARNING: Some cards weigh a lot, even over 25MB - if your internet is slow CHANGE WAIT TIME between card downloads to even 10 seconds!")
+    print("The corresponding SLEEP functions in code have comments above, surrounded by #.")
 
     url = data["url"]
     name = data["name"]
@@ -193,8 +179,8 @@ def advanced_download(**data):
         gender_input = Select(driver.find_element(By.ID, "gender"))
         if (gender != ""):
             gender_input.select_by_value(gender)
-        else:#for test
-            print("gender > empty")#for test
+        #else:#for test
+            #print("gender > empty")#for test
     except:
         print("gender not found in datased - skipping")
 
@@ -286,6 +272,7 @@ def advanced_download(**data):
             url2 = url
             print("Got url - adding page number...")
             url2 += "&page=" + str(i)
+            print("Url: "+url2)
             print("Waiting 5 seconds for page to load...")
             driver.get(url2)
             time.sleep(5)

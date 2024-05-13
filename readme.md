@@ -17,7 +17,22 @@ I'm creating this application to learn some python and have it as a backup means
 ## How it works
 - The page for selected game is loaded and form is filled by the selenium. 
 - After search button clicked, program waits 5 seconds for website to load. 
-- It will download card every 4 seconds, to prevent multiple downloads, since the website doesn't like multiple downloads. (Some cards can be over 25MB that's why it's better to give it more than less time) //I may make function that check if the card download is finished than proceed to next card in the future.
+- It will download card every 5 seconds, to prevent multiple downloads, since the website doesn't like multiple downloads. (Some cards can be over 25MB that's why it's better to give it more than less time) //I may make function that check if the card download is finished than proceed to next card in the future.
 - If the page had less than 24 cards on it, it's the last page (or only one) -> Download Finished
 - If page have 24 cards but the "Next" button is disabled -> Download Finished
 - If the button is active -> change url and load page -> start downloading cards, untill there is less than 24 cards on page or the "Next" button is disabled.
+
+## Info for setup
+- Some cards weigh a lot, even over 25MB - if your internet is slow - CHANGE WAIT TIME - between card downloads to even 20 seconds!
+- The corresponding SLEEP functions in code have comments, surrounded by #. Just like shown below:
+```
+######################################
+#BELOW TIME FOR CARD TO BE DOWNLOADED#
+######################################
+```
++The known issue is -> malwarebytes will kill the program if you run it from PyCharm, and possibly in any other form. Disable it and try using it again. //It likes to kill python scripts.
+
+## How to ensure all cards ware downloaded
+- to be sure that program downloaded all the cards you can use this formula: ((number of pages) - 1) * 24 + (number of cards on last page)
+- for 7 pages, when last contains 4 cards it would loo like:  6*24+4 = 148 cards
+
