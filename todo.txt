@@ -12,4 +12,6 @@ The program will do it for you!
 + packing app into exe
 + selecting download location
 
-+START AT PAGE - when website goes down or the download is stopped //  also before download check if card exists in download folder to skip already downloaded cards
+//before download check if card exists in download folder to skip already downloaded cards
+
+Maybe add config - "Don't close browser after fnish" - set default true -> user checks if cards are being downloaded if not manualy terminates spawned browser
