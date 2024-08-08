@@ -10,12 +10,12 @@ def download(**data):
 
 #below code checks if the basic option is selected - if yes -> the universal function will be invoked | if no -> the advanced functions will be invoked - tailored to the data that is for set game type
     if data["mode"] == "basic":
-        basic_download(data["url"], data["name"], data["tags"])
+        basic_download(data["url"], data["name"], data["tags"], data["start_from"])
     else:
         advanced_download(**data)
 
 
-def basic_download(url, name, tags):
+def basic_download(url, name, tags, start_from):
     print("Basic download function invoked.")
     #I need to let user config wait time and provide some values or idk explain it in documentation and readme.md
     #OR
@@ -26,7 +26,8 @@ def basic_download(url, name, tags):
     url = url
     name = name
     tags = tags
-    print("url: ", url, " name: ", name," tag: ", tags)
+    print("url: ", url, " name: ", name," tag: ", tags," start_from: ", start_from)
+
     #selenium code below
     #options = webdriver.FirefoxOptions()
     #options.add_argument("-headless")
@@ -43,14 +44,30 @@ def basic_download(url, name, tags):
 
     print("Waiting 5 seconds for page to load...")
     time.sleep(5)
+    # base url - the url2 is for adding '&page='+i and than reseting it back to normal before adding next &page
+    url = driver.current_url
+
+    #logic for start from page n
+    if not start_from:
+        print("Starting from page 1")
+        #iterator for page 2 //see code near line ~121
+        i = 2
+    else:
+        start_from = str(start_from)
+        url_page_start = driver.current_url + "&page=" + start_from
+        driver.get(url_page_start)
+        print("Starting from page: " + start_from)
+        print("Waiting 5 seconds for page to load...")
+        #iteretor for next page from number provided by user
+        i = int(start_from)
+        i = i+1 #this addition is required coz function below adds page number after executing url
+        time.sleep(5)
+
 
     #just set the loop to be true until the "Next" button is "disabled" than flip the flag to exit loop // if Next button DISABLED flag = 0
-    i = 2
+
     i2 = 1
     flag = 1
-
-    #base url - the url2 is for adding '&page='+i and than reseting it back to normal before adding next &page
-    url = driver.current_url
 
     while (flag == 1):
         try:
@@ -69,8 +86,8 @@ def basic_download(url, name, tags):
                 print("There were less than 24 cards on last page.")
                 print(">>OR There is slight chance, that website got down.")
                 #    flag == 0 + go back to main() // or leave like that to exit program
-                print("Exiting in 5 seconds.")
-                time.sleep(5)
+                print("Exiting in 10 seconds.")
+                time.sleep(10)
                 driver.quit()
                 exit(0)
             next_button_script = """
@@ -204,6 +221,10 @@ def advanced_download(**data):
         modded_content = data["modded_content"]
     except:
         print("modded_content not found in datased - skipping")
+    try:
+        start_from = data["start_from"]
+    except:
+        print("modded_content not found in datased - skipping")
 
     #submit whole form
     tag_input.submit()
@@ -211,10 +232,28 @@ def advanced_download(**data):
     print("Waiting 5 seconds for page to load...")
     time.sleep(5)
 
+    # base url - the url2 is for adding '&page='+i and than reseting it back to normal before adding next &page
+    url = driver.current_url
+
+    #logic for start from page n
+    if not start_from:
+        print("Starting from page 1")
+        #iterator for page 2 //see code near line ~121
+        i = 2
+    else:
+        start_from = str(start_from)
+        url_page_start = driver.current_url + "&page=" + start_from
+        driver.get(url_page_start)
+        print("Starting from page: " + start_from)
+        print("Waiting 5 seconds for page to load...")
+        #iteretor for next page from number provided by user
+        i = int(start_from)
+        i = i+1 #this addition is required coz function below adds page number after executing url
+        time.sleep(5)
+
     #just set the loop to be true until the "Next" button is "disabled" than flip the flag to exit loop // if Next button DISABLED flag = 0
-    i = 2
     i2 = 1
-    flag = 1
+    flag = 11
 
     #base url - the url2 is for adding '&page='+i and than reseting it back to normal before adding next &page
     url = driver.current_url
@@ -236,8 +275,8 @@ def advanced_download(**data):
                 print("There were less than 24 cards on last page.")
                 print(">>OR There is slight chance, that website got down.")
                 #    flag == 0 + go back to main() // or leave like that to exit program
-                print("Exiting in 5 seconds.")
-                time.sleep(5)
+                print("Exiting in 10 seconds.")
+                time.sleep(10)
                 driver.quit()
                 exit(0)
             next_button_script = """

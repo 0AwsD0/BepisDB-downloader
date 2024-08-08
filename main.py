@@ -133,7 +133,9 @@ def KK(game, url, mode):
     show_hidden = input()
     print("Show only featured: (checkbox) - enter '1' to check - 0 or nothig to leave unchecked <Default>")
     show_only_featured = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, personality = personality, game_type = game_type, modded_content = modded_content, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
+    print("Start from page number: (number) <Default> = blank")
+    start_from = input()
+    download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, personality = personality, game_type = game_type, modded_content = modded_content, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
 
 
 def AA2_and_AI_HS2(game, url, mode):
@@ -161,7 +163,9 @@ def AA2_and_AI_HS2(game, url, mode):
     show_hidden = input()
     print("Show only featured: (checkbox) - enter '1' to check - 0 or nothig to leave unchecked <Default>")
     show_only_featured = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, personality = personality, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
+    print("Start from page number: (number) <Default> = blank")
+    start_from = input()
+    download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, personality = personality, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
 
 def HS(game, url, mode):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
@@ -185,7 +189,9 @@ def HS(game, url, mode):
     show_hidden = input()
     print("Show only featured: (checkbox) - enter '1' to check - 0 or nothig to leave unchecked <Default>")
     show_only_featured = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, personality = personality, game_type = game_type, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
+    print("Start from page number: (number) <Default> = blank")
+    start_from = input()
+    download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, personality = personality, game_type = game_type, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
 
 
 def PH(game, url, mode):
@@ -201,7 +207,9 @@ def PH(game, url, mode):
     show_hidden = input()
     print("Show only featured: (checkbox) - enter '1' to check - 0 or nothig to leave unchecked <Default>")
     show_only_featured = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
+    print("Start from page number: (number) <Default> = blank")
+    start_from = input()
+    download(mode = mode, game = game, url = url, name = name, tags = tags, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
 
 def COM3D2(game, url, mode):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
@@ -218,7 +226,9 @@ def COM3D2(game, url, mode):
     show_hidden = input()
     print("Show only featured: (checkbox) - enter '1' to check - 0 or nothig to leave unchecked <Default>")
     show_only_featured = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, preset_type = preset_type, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
+    print("Start from page number: (number) <Default> = blank")
+    start_from = input()
+    download(mode = mode, game = game, url = url, name = name, tags = tags, preset_type = preset_type, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
 
 
 def SH(game, url, mode):
@@ -234,7 +244,9 @@ def SH(game, url, mode):
     show_hidden = input()
     print("Show only featured: (checkbox) - enter '1' to check - 0 or nothig to leave unchecked <Default>")
     show_only_featured = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
+    print("Start from page number: (number) <Default> = blank")
+    start_from = input()
+    download(mode = mode, game = game, url = url, name = name, tags = tags, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
 
 def HC(game, url, mode):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
@@ -252,7 +264,9 @@ def HC(game, url, mode):
     show_hidden = input()
     print("Show only featured: (checkbox) - enter '1' to check - 0 or nothig to leave unchecked <Default>")
     show_only_featured = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured)
+    print("Start from page number: (number) <Default> = blank")
+    start_from = input()
+    download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
 
 def basic(game, url, mode):
     mode = mode
@@ -261,7 +275,9 @@ def basic(game, url, mode):
     name = input()
     print("Tags: (text) <Default> = blank")
     tags = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags)
+    print("Start from page number: (number) <Default> = blank")
+    start_from = input()
+    download(mode = mode, game = game, url = url, name = name, tags = tags, start_from = start_from)
 
 def main():
     menu()
