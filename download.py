@@ -86,9 +86,12 @@ def basic_download(url, name, tags, start_from):
                 print("There were less than 24 cards on last page.")
                 print(">>OR There is slight chance, that website got down.")
                 #    flag == 0 + go back to main() // or leave like that to exit program
+                print("You can close the spawned browser now.")
+                print("But before you close it -> CHECK IF DOWNLOAD FINISHED.")
+                print("-------------------")
                 print("Exiting in 10 seconds.")
                 time.sleep(10)
-                driver.quit()
+                #driver.quit()
                 exit(0)
             next_button_script = """
             xpath = "//a[contains(text(),'Next')]";
@@ -113,9 +116,11 @@ def basic_download(url, name, tags, start_from):
             if(button_state == "Disabled"):
                 print("Download FINISHED!")
                 #    flag == 0 + go back to main() // or leave like that to exit program
+                print("You can close the spawned browser now.")
+                print("But before you close it -> CHECK IF DOWNLOAD FINISHED.")
                 print("-------------------")
                 print("Exiting in 5 seconds.")
-                driver.quit()
+                #driver.quit()
                 time.sleep(5)
                 exit(0)
             print("Getting url...")
@@ -130,9 +135,12 @@ def basic_download(url, name, tags, start_from):
             i += 1
         except Exception:
             print("The download failed. //loop "+Exception)
+            print("You can close the spawned browser now.")
+            print("But before you close it -> CHECK IF DOWNLOAD FINISHED.")
+            print("-------------------")
             print("Exiting in 5 seconds.")
             time.sleep(5)
-            driver.quit()
+            #driver.quit()
             exit(1)
 
 #I tried to make below shorter since the download LOOP is same as in basic download, but the driver must be initialized in same method, so I can't do it without spawning additional unnecessary browsers
@@ -275,9 +283,11 @@ def advanced_download(**data):
                 print("There were less than 24 cards on last page.")
                 print(">>OR There is slight chance, that website got down.")
                 #    flag == 0 + go back to main() // or leave like that to exit program
+                print("You can close the spawned browser now.")
+                print("But before you close it -> CHECK IF DOWNLOAD FINISHED.")
                 print("Exiting in 10 seconds.")
                 time.sleep(10)
-                driver.quit()
+                #driver.quit() - uncomment to auto close NOT browser - commented to let user check if card download finished -> some of them take their time by some reason
                 exit(0)
             next_button_script = """
             xpath = "//a[contains(text(),'Next')]";
@@ -302,9 +312,11 @@ def advanced_download(**data):
             if(button_state == "Disabled"):
                 print("Download FINISHED!")
                 #    flag == 0 + go back to main() // or leave like that to exit program
+                print("You can close the spawned browser now.")
+                print("But before you close it -> CHECK IF DOWNLOAD FINISHED.")
                 print("-------------------")
                 print("Exiting in 5 seconds.")
-                driver.quit()
+                #driver.quit()
                 time.sleep(5)
                 exit(0)
             print("Getting url...")
@@ -319,9 +331,12 @@ def advanced_download(**data):
             i += 1
         except Exception:
             print("The download failed. ", Exception)
+            print("You can close the spawned browser now.")
+            print("But before you close it -> CHECK IF DOWNLOAD FINISHED.")
+            print("-------------------")
             print("Exiting in 5 seconds.")
             time.sleep(5)
-            driver.quit()
+            #driver.quit()
             exit(1)
 
 def main():
