@@ -117,7 +117,7 @@ def menu():
             mode = "basic"
             basic(game, url, mode)
     else:
-        print("Please select one of the correct options (1-6):")
+        print("Please select one of the correct options (1-9):")
         main()
 
 
