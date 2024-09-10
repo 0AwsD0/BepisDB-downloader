@@ -11,6 +11,7 @@ def menu():
     print("6. COM3D2")
     print("7. SH")
     print("8. HC")
+    print("9. SVS")
 
     selected = input()
 
@@ -101,6 +102,17 @@ def menu():
         if selected == "2":
             mode = "advanced"
             HC(game, url, mode)
+        else:
+            mode = "basic"
+            basic(game, url, mode)
+    elif selected == "9":
+        game = "SVS"
+        url = "https://db.bepis.moe/svs"
+        print("If you wish to enter only name and/or tags press 1 or ENTER (or anything else really). For advance download press 2.")
+        selected = input()
+        if selected == "2":
+            mode = "advanced"
+            SVS(game, url, mode)
         else:
             mode = "basic"
             basic(game, url, mode)
@@ -249,6 +261,26 @@ def SH(game, url, mode):
     download(mode = mode, game = game, url = url, name = name, tags = tags, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
 
 def HC(game, url, mode):
+    print("Enter in order (or use config file) the parameters or press enter to set default.")
+    print("Name: (text) <Default> = blank")
+    name = input()
+    print("Tags: (text) <Default> = blank")
+    tags = input()
+    print("Gender: (text) <Default> = Unspecified")
+    print("Possible Gender: Female | Male | Futanari")
+    gender = input()
+    print("Order by: (text) <Default> = Date Descending")
+    print("You can Order by: popularity | dateasc (Date Ascending)")
+    order_by = input()
+    print("Show hidden: (checkbox) - enter '1' to check - 0 or nothig to leave unchecked <Default>")
+    show_hidden = input()
+    print("Show only featured: (checkbox) - enter '1' to check - 0 or nothig to leave unchecked <Default>")
+    show_only_featured = input()
+    print("Start from page number: (number) <Default> = blank")
+    start_from = input()
+    download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
+
+def SVS(game, url, mode):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
     print("Name: (text) <Default> = blank")
     name = input()

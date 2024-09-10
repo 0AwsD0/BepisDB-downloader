@@ -168,13 +168,11 @@ def advanced_download(**data):
     print("WARNING: Some cards weigh a lot, even over 25MB - if your internet is slow CHANGE WAIT TIME between card downloads to even 10 seconds!")
     print("The corresponding SLEEP functions in code have comments above, surrounded by #.")
 
+    print("Waiting 5 seconds for page to load...")
+
     url = data["url"]
     name = data["name"]
     tags = data["tags"]
-
-    show_hidden = data["show_hidden"]
-    show_only_featured = data["show_only_featured"]
-    order_by = data["order_by"]
 
     #selenium code below
 
@@ -183,6 +181,10 @@ def advanced_download(**data):
     #driver = webdriver.Firefox(options=options)
     driver = webdriver.Firefox()
     driver.get(url)
+
+    #time for page to load
+    time.sleep(5)
+    print("Filling form...")
 
     # I know I can just make up the link to the website since it's uses GET method like "https://db.bepis.moe/koikatsu?name=aaaa&tag=bbbb" but I want to try use the way below
     name_input = driver.find_element(By.ID, "name")
@@ -227,12 +229,37 @@ def advanced_download(**data):
 
     try:
         modded_content = data["modded_content"]
+        modded_content_input = driver.find_element(By.ID, "checkbox-vanilla")
+        if (modded_content != ""):
+            modded_content_input.click()
     except:
         print("modded_content not found in datased - skipping")
     try:
         start_from = data["start_from"]
     except:
-        print("modded_content not found in datased - skipping")
+        print("start_from not found in datased - skipping")
+    try:
+        show_hidden = data["show_hidden"]
+        show_hidden_input = driver.find_element(By.ID, "checkbox-hidden")
+        if (show_hidden != ""):
+            show_hidden_input.click()
+    except:
+        print("show_hidden not found in datased - skipping")
+    try:
+        show_only_featured = data["show_only_featured"]
+        show_only_featured_input = driver.find_element(By.ID, "checkbox-featured")
+        if (show_only_featured != ""):
+            show_only_featured_input.click()
+    except:
+        print("show_only_featured not found in datased - skipping")
+    try:
+        order_by = data["order_by"]
+        order_by_input = Select(driver.find_element(By.ID, "orderby"))
+        if (order_by != ""):
+            order_by_input.select_by_value(order_by)
+    except:
+        print("order_by not found in datased - skipping")
+
 
     #submit whole form
     tag_input.submit()
@@ -261,7 +288,7 @@ def advanced_download(**data):
 
     #just set the loop to be true until the "Next" button is "disabled" than flip the flag to exit loop // if Next button DISABLED flag = 0
     i2 = 1
-    flag = 11
+    flag = 1
 
     #base url - the url2 is for adding '&page='+i and than reseting it back to normal before adding next &page
     url = driver.current_url
