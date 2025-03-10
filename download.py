@@ -69,11 +69,13 @@ def basic_download(url, name, tags, start_from):
     i2 = 1
     flag = 1
 
+    card_per_page = driver.execute_script("return document.getElementById(\"inner-card-body\").childElementCount")
+
     while (flag == 1):
         try:
             try:
-                while (i2 <= 24):
-                    print(f"Downloading card number: {i2}")
+                while (i2 <= card_per_page):
+                    print(f"Downloading card number: {i2}/{card_per_page}")
                     download_selector = "document.querySelector('#inner-card-body > div:nth-child(" + str(i2) + ") > div > div > a.btn.btn-primary.btn-sm').click();"
                     driver.execute_script(download_selector)
                     ######################################
@@ -81,15 +83,16 @@ def basic_download(url, name, tags, start_from):
                     ######################################
                     time.sleep(5)
                     i2 += 1
-            except Exception:
+            except Exception as eee:
                 print("The download FINISHED!")
-                print("There were less than 24 cards on last page.")
+                print(f"There were less than {card_per_page} cards on last page.")
                 print(">>OR There is slight chance, that website got down.")
                 #    flag == 0 + go back to main() // or leave like that to exit program
                 print("You can close the spawned browser now.")
                 print("But before you close it -> CHECK IF DOWNLOAD FINISHED.")
                 print("-------------------")
                 print("Exiting in 10 seconds.")
+                print(eee)
                 time.sleep(10)
                 #driver.quit()
                 exit(0)
@@ -125,10 +128,21 @@ def basic_download(url, name, tags, start_from):
                 exit(0)
             print("Getting url...")
             url2 = url
-            url2 += "&page=" + str(i)
             print("Got url - adding page number...")
-            print("Url: " + url2)
+            oldPageStr = "page=" + str(i - 1)
+            if ("&" + oldPageStr) in url:
+                url2 = url.replace("&" + oldPageStr, "&page=" + str(i))
+            elif ("?" + oldPageStr) in url:
+                url2 = url.replace("?" + oldPageStr, "?page=" + str(i))
+            elif oldPageStr in url:
+                url2 = url.replace(oldPageStr, "page=" + str(i))
+            elif "?" in url:
+                url2 = url + "&page=" + str(i)
+            else:
+                url2 = url + "?page=" + str(i)
+            print("Url: "+url2)
             print("Waiting 5 seconds for page to load...")
+            url = url2
             driver.get(url2)
             time.sleep(5)
             i2 = 1
@@ -292,12 +306,13 @@ def advanced_download(**data):
 
     #base url - the url2 is for adding '&page='+i and than reseting it back to normal before adding next &page
     url = driver.current_url
+    card_per_page = driver.execute_script("return document.getElementById(\"inner-card-body\").childElementCount")
 
     while (flag == 1):
         try:
             try:
-                while (i2 <= 24):
-                    print(f"Downloading card number: {i2}")
+                while (i2 <= card_per_page):
+                    print(f"Downloading card number: {i2}/{card_per_page}")
                     download_selector = "document.querySelector('#inner-card-body > div:nth-child(" + str(i2) + ") > div > div > a.btn.btn-primary.btn-sm').click();"
                     driver.execute_script(download_selector)
                     ######################################
@@ -305,14 +320,15 @@ def advanced_download(**data):
                     ######################################
                     time.sleep(5)
                     i2 += 1
-            except Exception:
+            except Exception as eee:
                 print("The download FINISHED!")
-                print("There were less than 24 cards on last page.")
+                print(f"There were less than {card_per_page} cards on last page.")
                 print(">>OR There is slight chance, that website got down.")
                 #    flag == 0 + go back to main() // or leave like that to exit program
                 print("You can close the spawned browser now.")
                 print("But before you close it -> CHECK IF DOWNLOAD FINISHED.")
                 print("Exiting in 10 seconds.")
+                print(eee)
                 time.sleep(10)
                 #driver.quit() - uncomment to auto close NOT browser - commented to let user check if card download finished -> some of them take their time by some reason
                 exit(0)
@@ -349,9 +365,20 @@ def advanced_download(**data):
             print("Getting url...")
             url2 = url
             print("Got url - adding page number...")
-            url2 += "&page=" + str(i)
+            oldPageStr = "page=" + str(i - 1)
+            if ("&" + oldPageStr) in url:
+                url2 = url.replace("&" + oldPageStr, "&page=" + str(i))
+            elif ("?" + oldPageStr) in url:
+                url2 = url.replace("?" + oldPageStr, "?page=" + str(i))
+            elif oldPageStr in url:
+                url2 = url.replace(oldPageStr, "page=" + str(i))
+            elif "?" in url:
+                url2 = url + "&page=" + str(i)
+            else:
+                url2 = url + "?page=" + str(i)
             print("Url: "+url2)
             print("Waiting 5 seconds for page to load...")
+            url = url2
             driver.get(url2)
             time.sleep(5)
             i2 = 1
