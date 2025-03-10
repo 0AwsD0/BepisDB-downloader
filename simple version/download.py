@@ -2,7 +2,6 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-import configparser
 
 #BTW selenium 420 ~blaze it XD
 
@@ -11,34 +10,13 @@ def download(**data):
 
 #below code checks if the basic option is selected - if yes -> the universal function will be invoked | if no -> the advanced functions will be invoked - tailored to the data that is for set game type
     if data["mode"] == "basic":
-        download_return = basic_download(data["url"], data["name"], data["tags"], data["start_from"])
-        if(download_return == 0):
-            exit(0)
-        else:
-            return 1
+        basic_download(data["url"], data["name"], data["tags"], data["start_from"])
     else:
-        download_return = advanced_download(**data)
-        if(download_return == 0):
-            exit(0)
-        else:
-            return 1
+        advanced_download(**data)
+
 
 def basic_download(url, name, tags, start_from):
     print("Basic download function invoked.")
-
-    #Confil loading
-    config = configparser.ConfigParser()
-    config.read('config.ini')
-    browser_visibility = config['USER']['browser_visibility']
-    card_download_interval = config['USER']['card_download_interval']
-    website_load_interval =  config['USER']['website_load_interval']
-    close_browser_after_download = config['USER']['close_browser_after_download']
-    close_program_after_download = config['USER']['close_program_after_download']
-    card_download_interval = int(card_download_interval)
-    website_load_interval = int(website_load_interval)
-    #/Config loaded
-
-
     #I need to let user config wait time and provide some values or idk explain it in documentation and readme.md
     #OR
     #I may try using watchdog or directory scan to check if file exists -> the card and waiting until it does so there is no need for download interval - it downloads only if previous card is downloaded
@@ -51,13 +29,10 @@ def basic_download(url, name, tags, start_from):
     print("url: ", url, " name: ", name," tag: ", tags," start_from: ", start_from)
 
     #selenium code below
-    if(browser_visibility == "0"):
-        options = webdriver.FirefoxOptions()
-        options.add_argument("-headless")
-        driver = webdriver.Firefox(options=options)
-        print("Headless browser mode.")
-    else:
-        driver = webdriver.Firefox()
+    #options = webdriver.FirefoxOptions()
+    #options.add_argument("-headless")
+    #driver = webdriver.Firefox(options=options)
+    driver = webdriver.Firefox()
     driver.get(url)
 
     # I know I can just make up the link to the website since it's uses GET method like "https://db.bepis.moe/koikatsu?name=aaaa&tag=bbbb" but I want to try use the way below
@@ -67,8 +42,8 @@ def basic_download(url, name, tags, start_from):
     tag_input.send_keys(tags)
     tag_input.submit()
 
-    print("Waiting ",website_load_interval," seconds for page to load...")
-    time.sleep(website_load_interval)
+    print("Waiting 5 seconds for page to load...")
+    time.sleep(5)
     # base url - the url2 is for adding '&page='+i and than reseting it back to normal before adding next &page
     url = driver.current_url
 
@@ -82,11 +57,11 @@ def basic_download(url, name, tags, start_from):
         url_page_start = driver.current_url + "&page=" + start_from
         driver.get(url_page_start)
         print("Starting from page: " + start_from)
-        print("Waiting ",website_load_interval," seconds for page to load...")
+        print("Waiting 5 seconds for page to load...")
         #iteretor for next page from number provided by user
         i = int(start_from)
         i = i+1 #this addition is required coz function below adds page number after executing url
-        time.sleep(website_load_interval)
+        time.sleep(5)
 
 
     #just set the loop to be true until the "Next" button is "disabled" than flip the flag to exit loop // if Next button DISABLED flag = 0
@@ -106,9 +81,9 @@ def basic_download(url, name, tags, start_from):
                     ######################################
                     #BELOW TIME FOR CARD TO BE DOWNLOADED#
                     ######################################
-                    time.sleep(card_download_interval)
+                    time.sleep(5)
                     i2 += 1
-            except Exception:
+            except Exception as eee:
                 print("The download FINISHED!")
                 print(f"There were less than {card_per_page} cards on last page.")
                 print(">>OR There is slight chance, that website got down.")
@@ -116,14 +91,11 @@ def basic_download(url, name, tags, start_from):
                 print("You can close the spawned browser now.")
                 print("But before you close it -> CHECK IF DOWNLOAD FINISHED.")
                 print("-------------------")
+                print("Exiting in 10 seconds.")
+                print(eee)
                 time.sleep(10)
-                if(close_browser_after_download == "1" or browser_visibility == "0"):
-                    driver.quit()
-                if(close_program_after_download == "1"):
-                    return 0
-                else:
-                    return 1
-
+                #driver.quit()
+                exit(0)
             next_button_script = """
             xpath = "//a[contains(text(),'Next')]";
             var matchingElement = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
@@ -150,14 +122,10 @@ def basic_download(url, name, tags, start_from):
                 print("You can close the spawned browser now.")
                 print("But before you close it -> CHECK IF DOWNLOAD FINISHED.")
                 print("-------------------")
-                #TO DO: if browser is invisible it should exit automatically / below line uncommented and if added
-                if (close_browser_after_download == "1" or browser_visibility == "0"):
-                    driver.quit()
+                print("Exiting in 5 seconds.")
+                #driver.quit()
                 time.sleep(5)
-                if (close_program_after_download == "1"):
-                    return 0
-                else:
-                    return 1
+                exit(0)
             print("Getting url...")
             url2 = url
             print("Got url - adding page number...")
@@ -173,10 +141,10 @@ def basic_download(url, name, tags, start_from):
             else:
                 url2 = url + "?page=" + str(i)
             print("Url: "+url2)
-            print("Waiting ",website_load_interval," seconds for page to load...")
+            print("Waiting 5 seconds for page to load...")
             url = url2
             driver.get(url2)
-            time.sleep(website_load_interval)
+            time.sleep(5)
             i2 = 1
             i += 1
         except Exception:
@@ -186,28 +154,13 @@ def basic_download(url, name, tags, start_from):
             print("-------------------")
             print("Exiting in 5 seconds.")
             time.sleep(5)
-            driver.quit()
-            print("Browser closed")
-            time.sleep(1)
+            #driver.quit()
             exit(1)
 
 #I tried to make below shorter since the download LOOP is same as in basic download, but the driver must be initialized in same method, so I can't do it without spawning additional unnecessary browsers
 #But in other end it's easier to deal with code that is simpler, even if there is more of it. ~Terry would approve
 def advanced_download(**data):
     print("Advanced download function invoked.")
-
-    #Confil loading
-    config = configparser.ConfigParser()
-    config.read('config.ini')
-    browser_visibility = config['USER']['browser_visibility']
-    card_download_interval = config['USER']['card_download_interval']
-    website_load_interval =  config['USER']['website_load_interval']
-    close_browser_after_download = config['USER']['close_browser_after_download']
-    close_program_after_download = config['USER']['close_program_after_download']
-    card_download_interval = int(card_download_interval)
-    website_load_interval = int(website_load_interval)
-    #/Config loaded
-
     print("DATA: ", data)
     '''
     ALL POSIBLE DATA:
@@ -229,7 +182,7 @@ def advanced_download(**data):
     print("WARNING: Some cards weigh a lot, even over 25MB - if your internet is slow CHANGE WAIT TIME between card downloads to even 10 seconds!")
     print("The corresponding SLEEP functions in code have comments above, surrounded by #.")
 
-    print("Waiting ",website_load_interval," seconds for page to load...")
+    print("Waiting 5 seconds for page to load...")
 
     url = data["url"]
     name = data["name"]
@@ -237,17 +190,14 @@ def advanced_download(**data):
 
     #selenium code below
 
-    if(browser_visibility == "0"):
-        options = webdriver.FirefoxOptions()
-        options.add_argument("-headless")
-        driver = webdriver.Firefox(options=options)
-        print("Headless browser mode.")
-    else:
-        driver = webdriver.Firefox()
+    #options = webdriver.FirefoxOptions()
+    #options.add_argument("-headless")
+    #driver = webdriver.Firefox(options=options)
+    driver = webdriver.Firefox()
     driver.get(url)
 
     #time for page to load
-    time.sleep(website_load_interval)
+    time.sleep(5)
     print("Filling form...")
 
     # I know I can just make up the link to the website since it's uses GET method like "https://db.bepis.moe/koikatsu?name=aaaa&tag=bbbb" but I want to try use the way below
@@ -328,10 +278,10 @@ def advanced_download(**data):
     #submit whole form
     tag_input.submit()
 
-    print("Waiting ",website_load_interval," seconds for page to load...")
-    time.sleep(website_load_interval)
+    print("Waiting 5 seconds for page to load...")
+    time.sleep(5)
 
-    # base url - the url2 is for adding '&page='+i and then reseting it back to normal before adding next &page
+    # base url - the url2 is for adding '&page='+i and than reseting it back to normal before adding next &page
     url = driver.current_url
 
     #logic for start from page n
@@ -344,17 +294,17 @@ def advanced_download(**data):
         url_page_start = driver.current_url + "&page=" + start_from
         driver.get(url_page_start)
         print("Starting from page: " + start_from)
-        print("Waiting ",website_load_interval," seconds for page to load...")
+        print("Waiting 5 seconds for page to load...")
         #iteretor for next page from number provided by user
         i = int(start_from)
         i = i+1 #this addition is required coz function below adds page number after executing url
-        time.sleep(website_load_interval)
+        time.sleep(5)
 
     #just set the loop to be true until the "Next" button is "disabled" than flip the flag to exit loop // if Next button DISABLED flag = 0
     i2 = 1
     flag = 1
 
-    #base url - the url2 is for adding '&page='+i and then reseting it back to normal before adding next &page
+    #base url - the url2 is for adding '&page='+i and than reseting it back to normal before adding next &page
     url = driver.current_url
     card_per_page = driver.execute_script("return document.getElementById(\"inner-card-body\").childElementCount")
 
@@ -368,24 +318,20 @@ def advanced_download(**data):
                     ######################################
                     #BELOW TIME FOR CARD TO BE DOWNLOADED#
                     ######################################
-                    time.sleep(card_download_interval)
+                    time.sleep(5)
                     i2 += 1
-            except Exception:
+            except Exception as eee:
                 print("The download FINISHED!")
                 print(f"There were less than {card_per_page} cards on last page.")
                 print(">>OR There is slight chance, that website got down.")
                 #    flag == 0 + go back to main() // or leave like that to exit program
                 print("You can close the spawned browser now.")
                 print("But before you close it -> CHECK IF DOWNLOAD FINISHED.")
-
+                print("Exiting in 10 seconds.")
+                print(eee)
                 time.sleep(10)
                 #driver.quit() - uncomment to auto close NOT browser - commented to let user check if card download finished -> some of them take their time by some reason
-                if(close_browser_after_download == "1" or browser_visibility == "0"):
-                    driver.quit()
-                if (close_program_after_download == "1"):
-                    return 0
-                else:
-                    return 1
+                exit(0)
             next_button_script = """
             xpath = "//a[contains(text(),'Next')]";
             var matchingElement = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
@@ -412,13 +358,10 @@ def advanced_download(**data):
                 print("You can close the spawned browser now.")
                 print("But before you close it -> CHECK IF DOWNLOAD FINISHED.")
                 print("-------------------")
-                if (close_browser_after_download == "1" or browser_visibility == "0"):
-                    driver.quit()
+                print("Exiting in 5 seconds.")
+                #driver.quit()
                 time.sleep(5)
-                if (close_program_after_download == "1"):
-                    return 0
-                else:
-                    return 1
+                exit(0)
             print("Getting url...")
             url2 = url
             print("Got url - adding page number...")
@@ -434,10 +377,10 @@ def advanced_download(**data):
             else:
                 url2 = url + "?page=" + str(i)
             print("Url: "+url2)
-            print("Waiting ",website_load_interval," seconds for page to load...")
+            print("Waiting 5 seconds for page to load...")
             url = url2
             driver.get(url2)
-            time.sleep(website_load_interval)
+            time.sleep(5)
             i2 = 1
             i += 1
         except Exception:
@@ -447,9 +390,7 @@ def advanced_download(**data):
             print("-------------------")
             print("Exiting in 5 seconds.")
             time.sleep(5)
-            driver.quit()
-            print("Browser closed.")
-            time.sleep(1)
+            #driver.quit()
             exit(1)
 
 def main():

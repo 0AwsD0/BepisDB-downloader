@@ -1,4 +1,6 @@
 from download import download
+import configparser
+import os.path
 
 def menu():
     #make cfg file or txt that allows to automaticaly select option
@@ -12,6 +14,8 @@ def menu():
     print("7. SH")
     print("8. HC")
     print("9. SVS")
+    print("10. CONFIG")
+    print("11. EXIT")
 
     selected = input()
 
@@ -116,10 +120,13 @@ def menu():
         else:
             mode = "basic"
             basic(game, url, mode)
+    elif selected == "10":
+        program_config()
+    elif selected == "11":
+        exit(0)
     else:
-        print("Please select one of the correct options (1-9):")
-        main()
-
+        print("Please select one of the correct options (1-11):")
+        menu()
 
 def KK(game, url, mode):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
@@ -147,8 +154,9 @@ def KK(game, url, mode):
     show_only_featured = input()
     print("Start from page number: (number) <Default> = blank")
     start_from = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, personality = personality, game_type = game_type, modded_content = modded_content, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
-
+    download_return = download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, personality = personality, game_type = game_type, modded_content = modded_content, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
+    if (download_return == 1):
+        menu()
 
 def AA2_and_AI_HS2(game, url, mode):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
@@ -177,7 +185,9 @@ def AA2_and_AI_HS2(game, url, mode):
     show_only_featured = input()
     print("Start from page number: (number) <Default> = blank")
     start_from = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, personality = personality, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
+    download_return = download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, personality = personality, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
+    if (download_return == 1):
+        menu()
 
 def HS(game, url, mode):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
@@ -203,8 +213,9 @@ def HS(game, url, mode):
     show_only_featured = input()
     print("Start from page number: (number) <Default> = blank")
     start_from = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, personality = personality, game_type = game_type, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
-
+    download_return = download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, personality = personality, game_type = game_type, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
+    if (download_return == 1):
+        menu()
 
 def PH(game, url, mode):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
@@ -221,7 +232,9 @@ def PH(game, url, mode):
     show_only_featured = input()
     print("Start from page number: (number) <Default> = blank")
     start_from = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
+    download_return = download(mode = mode, game = game, url = url, name = name, tags = tags, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
+    if (download_return == 1):
+        menu()
 
 def COM3D2(game, url, mode):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
@@ -240,8 +253,9 @@ def COM3D2(game, url, mode):
     show_only_featured = input()
     print("Start from page number: (number) <Default> = blank")
     start_from = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, preset_type = preset_type, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
-
+    download_return = download(mode = mode, game = game, url = url, name = name, tags = tags, preset_type = preset_type, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
+    if (download_return == 1):
+        menu()
 
 def SH(game, url, mode):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
@@ -258,7 +272,9 @@ def SH(game, url, mode):
     show_only_featured = input()
     print("Start from page number: (number) <Default> = blank")
     start_from = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
+    download_return = download(mode = mode, game = game, url = url, name = name, tags = tags, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
+    if (download_return == 1):
+        menu()
 
 def HC(game, url, mode):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
@@ -278,7 +294,9 @@ def HC(game, url, mode):
     show_only_featured = input()
     print("Start from page number: (number) <Default> = blank")
     start_from = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
+    download_return = download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
+    if (download_return == 1):
+        menu()
 
 def SVS(game, url, mode):
     print("Enter in order (or use config file) the parameters or press enter to set default.")
@@ -298,7 +316,9 @@ def SVS(game, url, mode):
     show_only_featured = input()
     print("Start from page number: (number) <Default> = blank")
     start_from = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
+    download_return = download(mode = mode, game = game, url = url, name = name, tags = tags, gender = gender, order_by = order_by, show_hidden = show_hidden, show_only_featured = show_only_featured, start_from = start_from)
+    if (download_return == 1):
+        menu()
 
 def basic(game, url, mode):
     mode = mode
@@ -309,9 +329,110 @@ def basic(game, url, mode):
     tags = input()
     print("Start from page number: (number) <Default> = blank")
     start_from = input()
-    download(mode = mode, game = game, url = url, name = name, tags = tags, start_from = start_from)
+    download_return = download(mode = mode, game = game, url = url, name = name, tags = tags, start_from = start_from)
+    if (download_return == 1):
+        menu()
+
+def create_config():
+    config = configparser.ConfigParser()
+    config['DEFAULT'] = {'browser_visibility': '1','card_download_interval': '5','website_load_interval': '5','close_browser_after_download': '0','close_program_after_download': '1'}
+    config['USER'] = {'browser_visibility': '1','card_download_interval': '5','website_load_interval': '5','close_browser_after_download': '0','close_program_after_download': '1'}
+    with open('config.ini', 'w') as conf:
+        config.write(conf)
+
+def program_config():
+    #loading config
+    #...
+    config = configparser.ConfigParser()
+    config.read("config.ini")
+    user_cfg = config["USER"]
+    value = None
+    print("PROGRAM CONFIGURATION EDITOR (1-5) - Enter for default.")
+    print("1. Enable/Disable browser visibility(GUI).")
+    print("2. Set card download interval.")
+    print("3. Wait for website to load interval.")
+    print("4. Close browser after download.")
+    print("4. Close program after download.")
+    print("6. Display default values.") #displays DEFAULT config
+    print("7. Display current values.")
+    print("8. Back to main menu.")
+    choice = input()
+    if(choice == "1"):
+        print("Enter [number {1/0} <default: 1>]")
+        value = input()
+        if(value == None):
+            value = 1
+        user_cfg['browser_visibility'] = str(value)
+        with open('config.ini', 'w') as conf:
+            config.write(conf)
+        program_config()
+    elif(choice == "2"):
+        print("Enter [number {integer} <default: 5>]")
+        value = input()
+        if(value == None):
+            value = 5
+        user_cfg['card_download_interval'] = str(value)
+        with open('config.ini', 'w') as conf:
+            config.write(conf)
+        program_config()
+    elif (choice == "3"):
+        print("Enter [number {integer} <default: 5>]")
+        value = input()
+        if(value == None):
+            value = 5
+        user_cfg['website_load_interval'] = str(value)
+        with open('config.ini', 'w') as conf:
+            config.write(conf)
+        program_config()
+    elif (choice == "4"):
+        print("Enter [number {1/0} <default: 1>]")
+        print("If browser_visibility is set to 0 and close_browser_after_download is set to 0, the program will not quit! You have to kill the process manually.")
+        value = input()
+        if(value == None):
+            value = 1
+        user_cfg['close_browser_after_download'] = str(value)
+        with open('config.ini', 'w') as conf:
+            config.write(conf)
+        program_config()
+    elif (choice == "5"):
+        print("Enter [number {1/0} <default: 1>]")
+        value = input()
+        if(value == None):
+            value = 1
+        user_cfg['close_program_after_download'] = str(value)
+        with open('config.ini', 'w') as conf:
+            config.write(conf)
+        program_config()
+    elif (choice == "6"):
+        print("Default values form config.ini")
+        config.read('config.ini')
+        print("browser_visibility: ",config['DEFAULT']['browser_visibility'])
+        print("card_download_interval: ",config['DEFAULT']['card_download_interval'])
+        print("website_load_interval: ",config['DEFAULT']['website_load_interval'])
+        print("close_after_download: ",config['DEFAULT']['close_browser_after_download'])
+        print("close_after_download: ",config['DEFAULT']['close_program_after_download'])
+        program_config()
+    elif (choice == "7"):
+        print("Current [USER] values form config.ini")
+        config.read('config.ini')
+        print("browser_visibility: ", config['USER']['browser_visibility'])
+        print("card_download_interval: ", config['USER']['card_download_interval'])
+        print("website_load_interval: ", config['USER']['website_load_interval'])
+        print("close_after_download: ", config['USER']['close_browser_after_download'])
+        print("close_after_download: ", config['USER']['close_program_after_download'])
+        program_config()
+    elif (choice == "8"):
+        menu()
+    else:
+        print("Please select one of the correct options (1-8):")
+        program_config()
 
 def main():
+    #check if config exists, if not create one
+    config = os.path.exists("config.ini")
+    if(config == False):
+        create_config()
+        print("Config file not found... Generating new one...")
     menu()
 
 if __name__ == "__main__":
