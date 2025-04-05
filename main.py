@@ -1,4 +1,5 @@
 from download import download
+from download import user_download
 import configparser
 import os.path
 
@@ -14,8 +15,9 @@ def menu():
     print("7. SH")
     print("8. HC")
     print("9. SVS")
-    print("10. CONFIG")
-    print("11. EXIT")
+    print("10. Download USER CARDS")
+    print("11. CONFIG")
+    print("12. EXIT")
 
     selected = input()
 
@@ -121,11 +123,24 @@ def menu():
             mode = "basic"
             basic(game, url, mode)
     elif selected == "10":
-        program_config()
+        print("Paste URL to user from your browser -> For example: https://db.bepis.moe/user/view/4267 <Default> = blank")
+        url = input()
+        print("Start from page: <Default> = blank")
+        start_from = input()
+        user_download_invoke(url, start_from)
     elif selected == "11":
+        program_config()
+    elif selected == "12":
         exit(0)
     else:
         print("Please select one of the correct options (1-11):")
+        menu()
+
+def user_download_invoke(url, start_from):
+    print("Downloading cards from USER -> URL: "+url)
+    print("Downloading cards from USER -> Start from page: "+start_from)
+    download_return = user_download(url = url, start_from = start_from)
+    if (download_return == 1):
         menu()
 
 def KK(game, url, mode):
