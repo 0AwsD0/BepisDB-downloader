@@ -1,3 +1,5 @@
+Function that will count how many cards should you have after finishing download.
+
 Are you certain game enjoyer? Do you fell annoyed selecting game (same one) every time on startup of the program?
 I'll have solution for you!
 The new function I planned will check if config file (txt?) exists to automatically choose game on startup!

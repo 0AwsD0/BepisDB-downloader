@@ -26,6 +26,7 @@ I'm creating this application to learn some python and have it as a backup means
 - If page have 23 cards but the "Next" button is disabled -> Download Finished
 - If the button is active -> change url and load page -> start downloading cards, untill there is less than 23 cards on page or the "Next" button is disabled.
 - Thanks to [Leayal](https://github.com/Leayal) contribution, if the website decides to change how many cards are on the page, the program will still work.
+- Added functionality that allows downloading cards made by user from user page - for example: https://db.bepis.moe/user/view/4267 | Select option "10. Download USER CARDS" and provide URL from top of your browser window like one showed before. Next enter page to start from or click "Enter" to start from page 1 by default.
 
 ## Info for setup
 - Some cards weigh a lot, even over 25MB - if your internet is slow - CHANGE WAIT TIME - between card downloads to even 20 seconds! //I know - should make function that checks the download state instead.
