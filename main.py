@@ -367,7 +367,7 @@ def program_config():
     print("2. Set card download interval.")
     print("3. Wait for website to load interval.")
     print("4. Close browser after download.")
-    print("4. Close program after download.")
+    print("5. Close program after download.")
     print("6. Display default values.") #displays DEFAULT config
     print("7. Display current values.")
     print("8. Back to main menu.")
